@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 
+const KEYSTONE_URL = 'https://keystone-phi-eosin.vercel.app'
+
 export default function Home() {
   const [email, setEmail] = useState('testuser2@example.com')
   const [password, setPassword] = useState('TestPassword123!')
@@ -13,7 +15,7 @@ export default function Home() {
     setResult(null)
 
     try {
-      const res = await fetch('http://localhost:3000/api/login', {
+      const res = await fetch(KEYSTONE_URL + '/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, password: password }),
@@ -43,7 +45,7 @@ export default function Home() {
         <p style={{ color: '#666', fontSize: '0.85rem', marginTop: '0.3rem' }}>A sample product with no auth code of its own</p>
 
         <div style={{ ...bannerStyle, marginTop: '1.5rem' }}>
-          This app authenticates entirely by calling Keystone, a separate identity service, at localhost:3000. No password logic, no session handling, and no user table exist in this codebase.
+          This app authenticates entirely by calling Keystone, a separate identity service hosted at {KEYSTONE_URL}. No password logic, no session handling, and no user table exist in this codebase.
         </div>
 
         <div style={cardStyle}>
