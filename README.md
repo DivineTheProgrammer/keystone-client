@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Keystone Client Demo
 
-## Getting Started
+A small, deliberately minimal application that proves Keystone works as real, external authentication infrastructure.
 
-First, run the development server:
+## What this is
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This app has no authentication code of its own. No password hashing, no session table, no login logic. Every piece of that lives in Keystone, a completely separate application running on its own port. This app's only job is to call Keystone's login endpoint directly and show what comes back.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+That distinction matters. It is easy to build auth that only works because it is tightly wired into one specific app. It is a different, harder thing to build auth that a genuinely separate application can depend on without knowing anything about how it works internally, only that it can send an email and password to an endpoint and get back a real, valid session.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This app is that proof, not a description of it.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How it works
 
-## Learn More
+The login page sends a request straight to Keystone's `/api/login` endpoint, running on a different port, from a browser. Keystone verifies the credentials, creates a session record, writes an audit log entry, and returns a real access token, all of which this app displays exactly as received, with no processing of its own.
 
-To learn more about Next.js, take a look at the following resources:
+## Related
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Keystone itself: https://github.com/DivineTheProgrammer/keystone
